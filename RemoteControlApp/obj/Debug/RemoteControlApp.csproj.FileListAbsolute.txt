@@ -1,0 +1,10 @@
+C:\Users\Lord Ashes\source\repos\TaleSpireRemoteControlPlugin\RemoteControlApp\bin\Debug\RemoteControlApp.exe.config
+C:\Users\Lord Ashes\source\repos\TaleSpireRemoteControlPlugin\RemoteControlApp\bin\Debug\RemoteControlApp.exe
+C:\Users\Lord Ashes\source\repos\TaleSpireRemoteControlPlugin\RemoteControlApp\bin\Debug\RemoteControlApp.pdb
+C:\Users\Lord Ashes\source\repos\TaleSpireRemoteControlPlugin\RemoteControlApp\obj\Debug\RemoteControlApp.csproj.AssemblyReference.cache
+C:\Users\Lord Ashes\source\repos\TaleSpireRemoteControlPlugin\RemoteControlApp\obj\Debug\RemoteControlApp.Form1.resources
+C:\Users\Lord Ashes\source\repos\TaleSpireRemoteControlPlugin\RemoteControlApp\obj\Debug\RemoteControlApp.Properties.Resources.resources
+C:\Users\Lord Ashes\source\repos\TaleSpireRemoteControlPlugin\RemoteControlApp\obj\Debug\RemoteControlApp.csproj.GenerateResource.cache
+C:\Users\Lord Ashes\source\repos\TaleSpireRemoteControlPlugin\RemoteControlApp\obj\Debug\RemoteControlApp.csproj.CoreCompileInputs.cache
+C:\Users\Lord Ashes\source\repos\TaleSpireRemoteControlPlugin\RemoteControlApp\obj\Debug\RemoteControlApp.exe
+C:\Users\Lord Ashes\source\repos\TaleSpireRemoteControlPlugin\RemoteControlApp\obj\Debug\RemoteControlApp.pdb
