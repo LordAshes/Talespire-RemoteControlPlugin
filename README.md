@@ -9,6 +9,7 @@ This plugin, like all others, is free but if you want to donate, use: http://198
 ## Change Log
 
 ```
+1.1.0: Updated Remote Control App and plugin to support rotation and camera operations.
 1.0.0: Initial release
 ```
 
@@ -24,6 +25,10 @@ This plugin does not provide any way for the players to see the Talespire enviro
 the GM would stream a Talespire view for the players. Check out the Stream Views Plugin for the ability to stream
 different views for the players while still maintaining the GM account view as secret.
 
+To prevent the Remote Controls from controlling both the Player and GM instances of Talespire, the Remote Control
+Server is started manually by keyboard shortcut (default RCTRL+C). It should be started on the Player instance but
+not the GM (to prevent players from controlling the GM camera).
+
 Once this is done, the players can launch the Remote Control App. Currently this is a simple Win Forms app.
 
 The player enters the IP address of the GM's machine (that the GM provides to the players) and the port. The default
@@ -32,6 +37,15 @@ component run by the GM).
 
 The player then enters the mini name that they wish to control. Typically this would be the name of their own mini.
 
-After that the player can press the directional buttons on the Remote Control App in order to move his/her mini.
+After that the player can press the directional buttons on the Remote Control App in order to move his/her mini,
+rotate his/her mini, move the camera, and/or rotate the camwera.
+
+Settings on the remote are provided to determine how much each button press moves, how much each button press rotates,
+and if the mini is to change facing whem moving.
 
 The RemoteControlApp.exe can be found in the plugins install directory.
+
+## Limitations
+
+1. The Remote Control App has no permission checking. You can use it to control any mini that you know the name of.
+2. The control over the camera is shared between all remotes, thus two or more players can be fighting for control.
