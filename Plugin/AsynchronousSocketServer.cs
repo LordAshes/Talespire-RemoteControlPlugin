@@ -3,7 +3,6 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
 using UnityEngine;
 
 namespace LordAshes
@@ -26,12 +25,16 @@ namespace LordAshes
             public Socket workSocket = null;
         }
 
+        private static Action<Socket, string> _callback = null;
+
         public static class AsynchronousSocketListener
         {
             static Socket listener = null;
 
-            public static void StartListening(int port)
+            public static void StartListening(int port, Action<Socket,string> callback)
             {
+                _callback = callback;
+
                 IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, port);
 
                 // Create a TCP/IP socket.  
@@ -44,7 +47,6 @@ namespace LordAshes
                     listener.Listen(100);
 
                     // Start an asynchronous socket to listen for connections.  
-                    Console.WriteLine("Remote Control Plugin: Waiting for an instruction");
                     listener.BeginAccept(new AsyncCallback(AcceptCallback), listener);
                 }
                 catch (Exception e)
@@ -86,7 +88,8 @@ namespace LordAshes
                     content = state.sb.ToString();
                     if (content.IndexOf("\n") > -1)
                     {
-                        MessageHandler(handler, content);
+                        _callback(handler, content);
+                        AsynchronousSocketListener.Send(handler, content);
                     }
                     else
                     {
@@ -96,7 +99,7 @@ namespace LordAshes
                 }
             }
 
-            private static void Send(Socket handler, String data)
+            public static void Send(Socket handler, String data)
             {
                 // Convert the string data to byte data using ASCII encoding.  
                 byte[] byteData = Encoding.ASCII.GetBytes(data);
@@ -119,50 +122,11 @@ namespace LordAshes
                     handler.Close();
                     handler.Dispose();
 
-                    Console.WriteLine("Remote Control Plugin: Waiting for an instruction");
                     listener.BeginAccept(new AsyncCallback(AcceptCallback), listener);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.ToString());
-                }
-            }
-
-            private static void MessageHandler(Socket sender, string content)
-            {
-                Send(sender, content);
-                content = content.Replace("\r\n", "\n");
-                content = content.Replace("\r", "\n");
-                content = content.Substring(0, content.IndexOf("\n"));
-                Debug.Log("Remote Control Plugin: Request = " + content);
-
-                string[] command = content.Split(',');
-                CreatureBoardAsset asset = null;
-                foreach (CreatureBoardAsset check in CreaturePresenter.AllCreatureAssets)
-                {
-                    if((check.Creature.Name+"<>").Substring(0,(check.Creature.Name + "<>").IndexOf("<")) == command[0]) { asset = check; break; }
-                }
-                if(asset!=null)
-                {
-                    switch(command[1])
-                    {
-                        case "Up":
-                            asset.transform.position = new Vector3(asset.transform.position.x, asset.transform.position.y, asset.transform.position.z + 1);
-                            break;
-                        case "Down":
-                            asset.transform.position = new Vector3(asset.transform.position.x, asset.transform.position.y, asset.transform.position.z - 1);
-                            break;
-                        case "Left":
-                            asset.transform.position = new Vector3(asset.transform.position.x - 1, asset.transform.position.y, asset.transform.position.z);
-                            break;
-                        case "Right":
-                            asset.transform.position = new Vector3(asset.transform.position.x + 1, asset.transform.position.y, asset.transform.position.z);
-                            break;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Remote Control Plugin: Asset Named '"+command[0]+"' Not Found.");
                 }
             }
         }
