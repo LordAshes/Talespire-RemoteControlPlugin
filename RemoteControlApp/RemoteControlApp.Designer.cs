@@ -64,6 +64,7 @@ namespace RemoteControlApp
             this.lblRotation = new System.Windows.Forms.Label();
             this.lblSettings = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.ckbFaceWhenMoving = new System.Windows.Forms.CheckBox();
             this.lblConnection = new System.Windows.Forms.Label();
             this.lblControlCharacter = new System.Windows.Forms.Label();
             this.txtCharacterName = new System.Windows.Forms.TextBox();
@@ -76,7 +77,10 @@ namespace RemoteControlApp
             this.lblHistory = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.lstCommands = new System.Windows.Forms.ListBox();
-            this.ckbFaceWhenMoving = new System.Windows.Forms.CheckBox();
+            this.fraChat = new System.Windows.Forms.Panel();
+            this.lblChat = new System.Windows.Forms.Label();
+            this.txtChat = new System.Windows.Forms.TextBox();
+            this.btnSend = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelCharacter.SuspendLayout();
@@ -85,6 +89,7 @@ namespace RemoteControlApp
             this.panel5.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
+            this.fraChat.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel2
@@ -420,7 +425,7 @@ namespace RemoteControlApp
             // 
             this.lblSettings.AutoSize = true;
             this.lblSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSettings.Location = new System.Drawing.Point(457, 235);
+            this.lblSettings.Location = new System.Drawing.Point(457, 299);
             this.lblSettings.Name = "lblSettings";
             this.lblSettings.Size = new System.Drawing.Size(81, 20);
             this.lblSettings.TabIndex = 47;
@@ -439,10 +444,22 @@ namespace RemoteControlApp
             this.panel6.Controls.Add(this.lblMoveAmount);
             this.panel6.Controls.Add(this.txtPort);
             this.panel6.Controls.Add(this.txtIP);
-            this.panel6.Location = new System.Drawing.Point(449, 245);
+            this.panel6.Location = new System.Drawing.Point(449, 309);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(418, 146);
             this.panel6.TabIndex = 46;
+            // 
+            // ckbFaceWhenMoving
+            // 
+            this.ckbFaceWhenMoving.AutoSize = true;
+            this.ckbFaceWhenMoving.Checked = true;
+            this.ckbFaceWhenMoving.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbFaceWhenMoving.Location = new System.Drawing.Point(196, 90);
+            this.ckbFaceWhenMoving.Name = "ckbFaceWhenMoving";
+            this.ckbFaceWhenMoving.Size = new System.Drawing.Size(133, 17);
+            this.ckbFaceWhenMoving.TabIndex = 52;
+            this.ckbFaceWhenMoving.Text = "Face Moving Direction";
+            this.ckbFaceWhenMoving.UseVisualStyleBackColor = true;
             // 
             // lblConnection
             // 
@@ -526,7 +543,7 @@ namespace RemoteControlApp
             // 
             this.lblHistory.AutoSize = true;
             this.lblHistory.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHistory.Location = new System.Drawing.Point(20, 235);
+            this.lblHistory.Location = new System.Drawing.Point(20, 299);
             this.lblHistory.Name = "lblHistory";
             this.lblHistory.Size = new System.Drawing.Size(70, 20);
             this.lblHistory.TabIndex = 49;
@@ -536,7 +553,7 @@ namespace RemoteControlApp
             // 
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel7.Controls.Add(this.lstCommands);
-            this.panel7.Location = new System.Drawing.Point(12, 245);
+            this.panel7.Location = new System.Drawing.Point(12, 309);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(418, 146);
             this.panel7.TabIndex = 48;
@@ -549,23 +566,49 @@ namespace RemoteControlApp
             this.lstCommands.Size = new System.Drawing.Size(386, 108);
             this.lstCommands.TabIndex = 0;
             // 
-            // ckbFaceWhenMoving
+            // fraChat
             // 
-            this.ckbFaceWhenMoving.AutoSize = true;
-            this.ckbFaceWhenMoving.Checked = true;
-            this.ckbFaceWhenMoving.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbFaceWhenMoving.Location = new System.Drawing.Point(196, 90);
-            this.ckbFaceWhenMoving.Name = "ckbFaceWhenMoving";
-            this.ckbFaceWhenMoving.Size = new System.Drawing.Size(133, 17);
-            this.ckbFaceWhenMoving.TabIndex = 52;
-            this.ckbFaceWhenMoving.Text = "Face Moving Direction";
-            this.ckbFaceWhenMoving.UseVisualStyleBackColor = true;
+            this.fraChat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.fraChat.Controls.Add(this.btnSend);
+            this.fraChat.Controls.Add(this.txtChat);
+            this.fraChat.Location = new System.Drawing.Point(12, 238);
+            this.fraChat.Name = "fraChat";
+            this.fraChat.Size = new System.Drawing.Size(855, 51);
+            this.fraChat.TabIndex = 49;
+            // 
+            // lblChat
+            // 
+            this.lblChat.AutoSize = true;
+            this.lblChat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblChat.Location = new System.Drawing.Point(23, 228);
+            this.lblChat.Name = "lblChat";
+            this.lblChat.Size = new System.Drawing.Size(52, 20);
+            this.lblChat.TabIndex = 52;
+            this.lblChat.Text = "Chat:";
+            // 
+            // txtChat
+            // 
+            this.txtChat.Location = new System.Drawing.Point(15, 17);
+            this.txtChat.Name = "txtChat";
+            this.txtChat.Size = new System.Drawing.Size(722, 20);
+            this.txtChat.TabIndex = 0;
+            // 
+            // btnSend
+            // 
+            this.btnSend.Location = new System.Drawing.Point(751, 8);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(86, 33);
+            this.btnSend.TabIndex = 1;
+            this.btnSend.Text = "Send";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // RemoteControlApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(879, 403);
+            this.ClientSize = new System.Drawing.Size(879, 465);
+            this.Controls.Add(this.lblChat);
             this.Controls.Add(this.lblHistory);
             this.Controls.Add(this.panel7);
             this.Controls.Add(this.lblSettings);
@@ -574,6 +617,7 @@ namespace RemoteControlApp
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.lblMovement);
             this.Controls.Add(this.panel2);
+            this.Controls.Add(this.fraChat);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "RemoteControlApp";
@@ -590,6 +634,8 @@ namespace RemoteControlApp
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.panel7.ResumeLayout(false);
+            this.fraChat.ResumeLayout(false);
+            this.fraChat.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -645,6 +691,10 @@ namespace RemoteControlApp
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.ListBox lstCommands;
         private System.Windows.Forms.CheckBox ckbFaceWhenMoving;
+        private System.Windows.Forms.Panel fraChat;
+        private System.Windows.Forms.Button btnSend;
+        private System.Windows.Forms.TextBox txtChat;
+        private System.Windows.Forms.Label lblChat;
     }
 }
 

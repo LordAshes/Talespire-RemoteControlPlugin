@@ -1,9 +1,12 @@
 ﻿using BepInEx;
+using BepInEx.Configuration;
 using System.Net.Sockets;
 
 using System.Collections;
 using UnityEngine;
 using static RootTargetCameraMode;
+using System.Linq;
+using System;
 
 namespace LordAshes
 {
@@ -13,17 +16,27 @@ namespace LordAshes
         // Plugin info
         public const string Name = "Remote Control Plug-In";
         public const string Guid = "org.lordashes.plugins.remotecontrol";
-        public const string Version = "1.1.0.0";
+        public const string Version = "1.2.0.0";
 
         // Configuration
+        public static KeyboardShortcut startControlServer { get; set; }
 
         void Awake()
         {
             UnityEngine.Debug.Log("Remote Control Plugin: Active.");
 
-            StartCoroutine("RemoteControlServer");
+            startControlServer = Config.Bind("Settings", "Start Remote Control Server", new KeyboardShortcut(KeyCode.C, KeyCode.RightControl)).Value;
 
             Utility.PostOnMainPage(this.GetType());
+        }
+
+        void Update()
+        {
+            if(Utility.StrictKeyCheck(startControlServer))
+            {
+                Debug.Log("Remote Control Plugin: Starting Remote Control Server");
+                StartCoroutine("RemoteControlServer");
+            }
         }
 
         IEnumerator RemoteControlServer()
@@ -47,10 +60,13 @@ namespace LordAshes
             }
             float amount = 1.0f;
             if (command.Length > 2) { float.TryParse(command[2], out amount); }
-            if (asset != null)
+            if ((asset != null) || (command[0] == "GM"))
             {
                 switch (command[1].ToUpper())
                 {
+                    case "CHAT":
+                        ChatManager.SendChatMessage(String.Join(",", command.Skip(2).ToArray()), asset.Creature.CreatureId.Value);
+                        break;
                     case "DELETE":
                         asset.RequestDelete();
                         break;
@@ -105,6 +121,10 @@ namespace LordAshes
                         }
                         break;
                 }
+            }
+            else if (command[0].ToUpper() == "GM" && command[1].ToUpper() == "CHAT")
+            {
+                ChatManager.SendChatMessage(String.Join(",", command.Skip(2).ToArray()), LocalPlayer.Id.Value);
             }
             else if(command[0].ToUpper()=="CAMERA")
             {

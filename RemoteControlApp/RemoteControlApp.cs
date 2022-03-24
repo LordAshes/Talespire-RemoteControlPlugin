@@ -15,8 +15,6 @@ namespace RemoteControlApp
 
         private void SendCommand(string sender, string cmd)
         {
-            cmd = cmd.ToUpper();
-
             if (ckbFaceWhenMoving.Checked == true)
             {
                 if (!cmd.ToUpper().Contains("ROTATE") && sender.ToUpper()!="CAMERA")
@@ -54,113 +52,113 @@ namespace RemoteControlApp
 
         private void btnUp_Click(object sender, EventArgs e)
         {
-            SendCommand(txtCharacterName.Text, "Up,"+txtMoveAmount.Text);
+            SendCommand(txtCharacterName.Text, "UP,"+txtMoveAmount.Text);
         }
 
         private void btnDown_Click(object sender, EventArgs e)
         {
-            SendCommand(txtCharacterName.Text, "Down," + txtMoveAmount.Text);
+            SendCommand(txtCharacterName.Text, "DOWN," + txtMoveAmount.Text);
         }
 
         private void btnLeft_Click(object sender, EventArgs e)
         {
-            SendCommand(txtCharacterName.Text, "Left," + txtMoveAmount.Text);
+            SendCommand(txtCharacterName.Text, "LEFT," + txtMoveAmount.Text);
         }
 
         private void btnRight_Click(object sender, EventArgs e)
         {
-            SendCommand(txtCharacterName.Text, "Right," + txtMoveAmount.Text);
+            SendCommand(txtCharacterName.Text, "RIGHT," + txtMoveAmount.Text);
         }
 
         private void btnForward_Click(object sender, EventArgs e)
         {
-            SendCommand(txtCharacterName.Text, "Forward," + txtMoveAmount.Text);
+            SendCommand(txtCharacterName.Text, "FORWARD," + txtMoveAmount.Text);
         }
 
         private void btnBackward_Click(object sender, EventArgs e)
         {
-            SendCommand(txtCharacterName.Text, "Backward," + txtMoveAmount.Text);
+            SendCommand(txtCharacterName.Text, "BACKWARD," + txtMoveAmount.Text);
         }
 
 
         private void btnRotateForward_Click(object sender, EventArgs e)
         {
-            SendCommand(txtCharacterName.Text, "Rotate,Forward," + txtRotateAmount.Text);
+            SendCommand(txtCharacterName.Text, "ROTATE,FORWARD," + txtRotateAmount.Text);
         }
 
         private void btnRotateBackward_Click(object sender, EventArgs e)
         {
-            SendCommand(txtCharacterName.Text, "Rotate,Backward," + txtRotateAmount.Text);
+            SendCommand(txtCharacterName.Text, "ROTATE,BACKWARD," + txtRotateAmount.Text);
         }
 
         private void btnRotateLeft_Click(object sender, EventArgs e)
         {
-            SendCommand(txtCharacterName.Text, "Rotate,CounterClockwise," + txtRotateAmount.Text);
+            SendCommand(txtCharacterName.Text, "ROTATE,COUNTERCLOCKWISE," + txtRotateAmount.Text);
         }
 
         private void btnRotateRight_Click(object sender, EventArgs e)
         {
-            SendCommand(txtCharacterName.Text, "Rotate,Clockwise," + txtRotateAmount.Text);
+            SendCommand(txtCharacterName.Text, "ROTATE,CLOCKWISE," + txtRotateAmount.Text);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            SendCommand(txtCharacterName.Text, "Delete");
+            SendCommand(txtCharacterName.Text, "DELETE");
         }
 
         private void btnCameraForward_Click(object sender, EventArgs e)
         {
-            SendCommand("Camera", "Forward," + txtMoveAmount.Text);
+            SendCommand("CAMERA", "FORWARD," + txtMoveAmount.Text);
         }
 
         private void btnCameraBackward_Click(object sender, EventArgs e)
         {
-            SendCommand("Camera", "Backward," + txtMoveAmount.Text);
+            SendCommand("CAMERA", "BACKWARD," + txtMoveAmount.Text);
         }
 
         private void btnCameraLeft_Click(object sender, EventArgs e)
         {
-            SendCommand("Camera", "Left," + txtMoveAmount.Text);
+            SendCommand("CAMERA", "LEFT," + txtMoveAmount.Text);
         }
 
         private void btnCameraRight_Click(object sender, EventArgs e)
         {
-            SendCommand("Camera", "Right," + txtMoveAmount.Text);
+            SendCommand("CAMERA", "RIGHT," + txtMoveAmount.Text);
         }
 
         private void btnCameraUp_Click(object sender, EventArgs e)
         {
-            SendCommand("Camera", "Up," + txtMoveAmount.Text);
+            SendCommand("CAMERA", "UP," + txtMoveAmount.Text);
         }
 
         private void btnCameraDown_Click(object sender, EventArgs e)
         {
-            SendCommand("Camera", "Down," + txtMoveAmount.Text);
+            SendCommand("CAMERA", "DOWN," + txtMoveAmount.Text);
         }
 
         private void btnCameraRotateForward_Click(object sender, EventArgs e)
         {
-            SendCommand("Camera", "Rotate,Forward," + txtRotateAmount.Text);
+            SendCommand("CAMERA", "ROTATE,FORWARD," + txtRotateAmount.Text);
         }
 
         private void btnCameraRotateLeft_Click(object sender, EventArgs e)
         {
-            SendCommand("Camera", "Rotate,Left," + txtRotateAmount.Text);
+            SendCommand("CAMERA", "ROTATE,LEFT," + txtRotateAmount.Text);
         }
 
         private void btnCameraRotateRight_Click(object sender, EventArgs e)
         {
-            SendCommand("Camera", "Rotate,Right," + txtRotateAmount.Text);
+            SendCommand("CAMERA", "ROTATE,RIGHT," + txtRotateAmount.Text);
         }
 
         private void btnCameraRotateBackward_Click(object sender, EventArgs e)
         {
-            SendCommand("Camera", "Rotate,Backward," + txtRotateAmount.Text);
+            SendCommand("CAMERA", "ROTATE,BACKWARD," + txtRotateAmount.Text);
         }
 
-        private void btnForward_Click_1(object sender, EventArgs e)
+        private void btnSend_Click(object sender, EventArgs e)
         {
-
+            SendCommand(txtCharacterName.Text, "CHAT," + txtChat.Text);
         }
     }
 }
