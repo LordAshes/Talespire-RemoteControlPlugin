@@ -9,6 +9,8 @@ This plugin, like all others, is free but if you want to donate, use: http://198
 ## Change Log
 
 ```
+1.2.0: Added chat feature speaking as the indicated character or GM (if character name is GM).
+       This function allows use of chat services such as Chat Roll if installed.
 1.1.0: Updated Remote Control App and plugin to support rotation and camera operations.
 1.0.0: Initial release
 ```
@@ -44,6 +46,16 @@ Settings on the remote are provided to determine how much each button press move
 and if the mini is to change facing whem moving.
 
 The RemoteControlApp.exe can be found in the plugins install directory.
+
+### Chat Function
+
+When using the Chat function, by default, the content will be spoken by the character whose name is in the Remote
+Control and the results are also written to the log. If the character name is changed to GM on the Remote Control,
+the message will be sent as the local player (GM or not) and will show up in the chat.
+
+If any Chat Service plugins are installed (such as Chat Roll), the chat content will be processed through these
+Chat Service plugin. For example, if the Chat Roll plugin is installed, the Remote Control Chat function can be used
+to make Chat Roll requests. 
 
 ## Limitations
 
