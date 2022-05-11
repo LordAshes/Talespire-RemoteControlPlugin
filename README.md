@@ -10,6 +10,7 @@ This plugin, like all others, is free but if you want to donate, use: http://198
 
 ```
 2.0.0: Fix after BR HF Integration update
+2.0.0: Added webpage files for web based remote control
 1.2.0: Added chat feature speaking as the indicated character or GM (if character name is GM).
        This function allows use of chat services such as Chat Roll if installed.
 1.1.0: Updated Remote Control App and plugin to support rotation and camera operations.
