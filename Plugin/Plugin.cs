@@ -16,33 +16,32 @@ namespace LordAshes
         // Plugin info
         public const string Name = "Remote Control Plug-In";
         public const string Guid = "org.lordashes.plugins.remotecontrol";
-        public const string Version = "1.2.0.0";
+        public const string Version = "2.0.0.0";
 
         // Configuration
         public static KeyboardShortcut startControlServer { get; set; }
+        public static bool diagnostics = false;
 
         void Awake()
         {
             UnityEngine.Debug.Log("Remote Control Plugin: Active.");
 
-            startControlServer = Config.Bind("Settings", "Start Remote Control Server", new KeyboardShortcut(KeyCode.C, KeyCode.RightControl)).Value;
+            StartCoroutine("RemoteControlServer");
 
             Utility.PostOnMainPage(this.GetType());
         }
 
         void Update()
         {
-            if(Utility.StrictKeyCheck(startControlServer))
-            {
-                Debug.Log("Remote Control Plugin: Starting Remote Control Server");
-                StartCoroutine("RemoteControlServer");
-            }
         }
 
         IEnumerator RemoteControlServer()
         {
             yield return new WaitForSeconds(0.1f);
-            AsynchronousSocketListener.StartListening(Config.Bind("Setting","Server Port", 11000).Value, MessageHandler);
+            int port = Config.Bind("Setting", "Server Port", 11000).Value;
+            diagnostics = Config.Bind("Setting", "Include Server Diagnostic Logs", false).Value;
+            Debug.Log("Remote Control Plugin: Starting Remote Control Server (Listening On Port "+port+")");
+            AsynchronousSocketListener.StartListening(port, MessageHandler, diagnostics);
         }
 
         private static void MessageHandler(Socket sender, string content)
@@ -56,7 +55,7 @@ namespace LordAshes
             CreatureBoardAsset asset = null;
             foreach (CreatureBoardAsset check in CreaturePresenter.AllCreatureAssets)
             {
-                if ((check.Creature.Name + "<>").Substring(0, (check.Creature.Name + "<>").IndexOf("<")) == command[0]) { asset = check; break; }
+                if ((check.Name + "<>").Substring(0, (check.Name + "<>").IndexOf("<")) == command[0]) { asset = check; break; }
             }
             float amount = 1.0f;
             if (command.Length > 2) { float.TryParse(command[2], out amount); }
@@ -65,7 +64,7 @@ namespace LordAshes
                 switch (command[1].ToUpper())
                 {
                     case "CHAT":
-                        ChatManager.SendChatMessage(String.Join(",", command.Skip(2).ToArray()), asset.Creature.CreatureId.Value);
+                        ChatManager.SendChatMessage(String.Join(",", command.Skip(2).ToArray()), asset.CreatureId.Value);
                         break;
                     case "DELETE":
                         asset.RequestDelete();
@@ -79,44 +78,44 @@ namespace LordAshes
                     case "FORWARD":
                     case "FORWARDANDFACE":
                         asset.MoveTo(new Vector3(asset.transform.position.x, asset.transform.position.y, asset.transform.position.z + amount));
-                        if (command[1].ToUpper().EndsWith("ANDFACE")) { asset.CreatureRoot.transform.eulerAngles = new Vector3(asset.CreatureRoot.transform.eulerAngles.x, 180, asset.CreatureRoot.transform.eulerAngles.z); }
+                        if (command[1].ToUpper().EndsWith("ANDFACE")) { Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles = new Vector3(Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.x, 180, Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.z); }
                         break;
                     case "BACKWARD":
                     case "BACKWARDANDFACE":
                         asset.MoveTo(new Vector3(asset.transform.position.x, asset.transform.position.y, asset.transform.position.z - amount));
-                        if (command[1].ToUpper().EndsWith("ANDFACE")) { asset.CreatureRoot.transform.eulerAngles = new Vector3(asset.CreatureRoot.transform.eulerAngles.x, 0, asset.CreatureRoot.transform.eulerAngles.z); }
+                        if (command[1].ToUpper().EndsWith("ANDFACE")) { Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles = new Vector3(Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.x, 0, Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.z); }
                         break;
                     case "LEFT":
                     case "LEFTANDFACE":
                         asset.MoveTo(new Vector3(asset.transform.position.x - amount, asset.transform.position.y, asset.transform.position.z));
-                        if (command[1].ToUpper().EndsWith("ANDFACE")) { asset.CreatureRoot.transform.eulerAngles = new Vector3(asset.CreatureRoot.transform.eulerAngles.x, 90, asset.CreatureRoot.transform.eulerAngles.z); }
+                        if (command[1].ToUpper().EndsWith("ANDFACE")) { Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles = new Vector3(Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.x, 90, Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.z); }
                         break;
                     case "RIGHT":
                     case "RIGHTANDFACE":
                         asset.MoveTo(new Vector3(asset.transform.position.x + amount, asset.transform.position.y, asset.transform.position.z));
-                        if (command[1].ToUpper().EndsWith("ANDFACE")) { asset.CreatureRoot.transform.eulerAngles = new Vector3(asset.CreatureRoot.transform.eulerAngles.x, 270, asset.CreatureRoot.transform.eulerAngles.z); }
+                        if (command[1].ToUpper().EndsWith("ANDFACE")) { Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles = new Vector3(Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.x, 270, Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.z); }
                         break;
                     case "ROTATE":
                         if (command.Length > 3) { float.TryParse(command[3], out amount); }
                         switch (command[2].ToUpper())
                         {
                             case "LEFT":
-                                asset.CreatureRoot.transform.eulerAngles = new Vector3(asset.CreatureRoot.transform.eulerAngles.x, asset.CreatureRoot.transform.eulerAngles.y, asset.CreatureRoot.transform.eulerAngles.z - amount);
+                                Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles = new Vector3(Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.x, Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.y, Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.z - amount);
                                 break;
                             case "RIGHT":
-                                asset.CreatureRoot.transform.eulerAngles = (new Vector3(asset.CreatureRoot.transform.eulerAngles.x, asset.CreatureRoot.transform.eulerAngles.y, asset.CreatureRoot.transform.eulerAngles.z + amount));
+                                Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles = (new Vector3(Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.x, Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.y, Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.z + amount));
                                 break;
                             case "FORWARD":
-                                asset.CreatureRoot.transform.eulerAngles = ( new Vector3(asset.CreatureRoot.transform.eulerAngles.x - amount, asset.CreatureRoot.transform.eulerAngles.y, asset.CreatureRoot.transform.eulerAngles.z));
+                                Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles = ( new Vector3(Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.x - amount, Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.y, Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.z));
                                 break;
                             case "BACKWARD":
-                                asset.CreatureRoot.transform.eulerAngles = (new Vector3(asset.CreatureRoot.transform.eulerAngles.x + amount, asset.CreatureRoot.transform.eulerAngles.y, asset.CreatureRoot.transform.eulerAngles.z));
+                                Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles = (new Vector3(Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.x + amount, Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.y, Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.z));
                                 break;
                             case "COUNTERCLOCKWISE":
-                                asset.CreatureRoot.transform.eulerAngles = (new Vector3(asset.CreatureRoot.transform.eulerAngles.x, asset.CreatureRoot.transform.eulerAngles.y + amount, asset.CreatureRoot.transform.eulerAngles.z));
+                                Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles = (new Vector3(Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.x, Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.y + amount, Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.z));
                                 break;
                             case "CLOCKWISE":
-                                asset.CreatureRoot.transform.eulerAngles = (new Vector3(asset.CreatureRoot.transform.eulerAngles.x, asset.CreatureRoot.transform.eulerAngles.y - amount, asset.CreatureRoot.transform.eulerAngles.z));
+                                Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles = (new Vector3(Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.x, Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.y - amount, Utility.GetRootLoader(asset.CreatureId).transform.eulerAngles.z));
                                 break;
                         }
                         break;

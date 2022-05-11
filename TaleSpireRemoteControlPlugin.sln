@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin", "Plugin\Plugin.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteControlApp", "RemoteControlApp\RemoteControlApp.csproj", "{DB47587F-C3ED-4431-8E76-0083540CEEEE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCPSend", "TCPSend\TCPSend.csproj", "{51E9317C-A454-4121-9EE0-54F627E65F22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DB47587F-C3ED-4431-8E76-0083540CEEEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB47587F-C3ED-4431-8E76-0083540CEEEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB47587F-C3ED-4431-8E76-0083540CEEEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51E9317C-A454-4121-9EE0-54F627E65F22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51E9317C-A454-4121-9EE0-54F627E65F22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51E9317C-A454-4121-9EE0-54F627E65F22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51E9317C-A454-4121-9EE0-54F627E65F22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
